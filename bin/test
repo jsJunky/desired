@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+# Make sure chromedriver is installed
+# To use a different driver go to
+# https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md
+chromedriver > /dev/null &
+pid=$!
+trap "kill $pid" INT TERM EXIT
+mix deps.get
+npm run-script build && mix test --include feature
