@@ -1,6 +1,5 @@
 defmodule Desired.PlayerControllerTest do
   use Desired.ConnCase
-  use Desired.Case, async: false
 
   @valid_attrs %{email: "some content", username: "some content"}
   @invalid_attrs %{}
@@ -12,7 +11,7 @@ defmodule Desired.PlayerControllerTest do
       |> List.wrap
       |> Poison.encode!
 
-    response = conn(:get, "/api/players") |> send_request
+    response = Desired.ConnCase.conn(:get, "/api/players") |> send_request
 
     assert response.status == 200
     assert response.resp_body == players_as_json

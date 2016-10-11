@@ -1,27 +1,17 @@
-defmodule Desired.PlayerViewTest do
+defmodule Desired.PlayerTest do
   use Desired.ConnCase
-  alias Desired.PlayerView
+  alias Desired.Player
 
-  test "players_json" do
-    player = insert(:player)
+  @valid_attrs %{email: "email@example.com", username: "username"}
+  @invalid_attrs %{}
 
-    rendered_player = PlayerView.player_json(player)
-
-    assert rendered_player == %{
-      email: player.email,
-      username: player.username,
-      inserted_at: player.inserted_at,
-      updated_at: player.updated_at
-    }
+  test "changeset with valid attributes" do
+    changeset = Player.changeset(%Player{}, @valid_attrs)
+    assert changeset.valid?
   end
 
-  test "index.json" do
-    player = insert(:player)
-
-    rendered_players = PlayerView.render("index.json", %{players: [player]})
-
-    assert rendered_players == %{
-      todos: [PlayerView.player_json(todo)]
-    }
+  test "changeset with invalid attributes" do
+    changeset = Player.changeset(%Player{}, @invalid_attrs)
+    refute changeset.valid?
   end
 end
